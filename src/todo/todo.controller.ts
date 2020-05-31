@@ -1,11 +1,12 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
 import {ToDoItem} from "./dto/doto-item.dto";
 import {TodoService} from "./todo.service";
+import {ShareService} from "../share/share.service";
 
 @Controller('todo')
 export class TodoController {
 
-    constructor(private toDoService: TodoService) {
+    constructor(private toDoService: TodoService, private shareService: ShareService) {
     }
 
     @Get()
@@ -16,7 +17,7 @@ export class TodoController {
 
     @Get(':id')
     find(@Param() params): ToDoItem {
-        console.log(params.id);
+        this.shareService.log(params.id);
         return this.toDoService.find(params.id);
     }
 
