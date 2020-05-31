@@ -1,23 +1,19 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
 import {ToDoItem} from "./doto-item.dto";
 
-class ToDo {
-
-}
-
 @Controller('todo')
 export class TodoController {
 
     @Get()
-    findAll(): ToDo[] {
-        return [new ToDo()];
+    findAll(): ToDoItem[] {
+        return [new ToDoItem()];
     }
 
 
     @Get(':id')
-    find(@Param() params): ToDo {
+    find(@Param() params): ToDoItem {
         console.log(params.id);
-        return new ToDo();
+        return new ToDoItem();
     }
 
     @Post()
