@@ -3,6 +3,7 @@ import {ToDoItem} from "./dto/doto-item.dto";
 import {TodoService} from "./todo.service";
 import {ShareService} from "../share/share.service";
 import {CreateToDoItem} from "./dto/create-item.dto";
+import {Roles} from "../share/decorator/roles.decorator";
 
 @Controller('todo')
 export class TodoController {
@@ -24,6 +25,7 @@ export class TodoController {
 
     @Post()
     @HttpCode(201)
+    @Roles('admin')
     create(@Body() createToDoItem: CreateToDoItem) {
         console.log(createToDoItem);
         return this.toDoService.create(createToDoItem);
