@@ -1,12 +1,15 @@
 import {Injectable} from '@nestjs/common';
 import {ToDoItem} from "./dto/doto-item.dto";
 import {CreateToDoItem} from "./dto/create-item.dto";
-
-var uuid = require("uuid");
+import {ShareService} from "../share/share.service";
 
 @Injectable()
 export class TodoService {
-    private todos: ToDoItem[] = [];
+    private todos: ToDoItem[];
+
+    constructor(private shareService: ShareService) {
+        this.todos = [];
+    }
 
     find(id: string) {
         return this.todos.find(it => it.id === id);
@@ -17,7 +20,7 @@ export class TodoService {
     }
 
     create(item: CreateToDoItem) {
-        let id = uuid.v1();
+        let id = this.shareService.generateUUID();
         this.todos.push({
             ...item, id
         });
