@@ -1,5 +1,5 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
-import {ToDoItem} from "./doto-item.dto";
+import {ToDoItem} from "./dto/doto-item.dto";
 import {TodoService} from "./todo.service";
 
 @Controller('todo')
