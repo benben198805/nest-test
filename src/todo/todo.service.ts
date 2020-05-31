@@ -1,5 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import {ToDoItem} from "./dto/doto-item.dto";
+import {CreateToDoItem} from "./dto/create-item.dto";
+
+var uuid = require("uuid");
 
 @Injectable()
 export class TodoService {
@@ -13,8 +16,12 @@ export class TodoService {
         return this.todos;
     }
 
-    create(item: ToDoItem) {
-        this.todos.push(item);
+    create(item: CreateToDoItem) {
+        let id = uuid.v1();
+        this.todos.push({
+            ...item, id
+        });
+        return id;
     }
 
     update(id, item: ToDoItem) {

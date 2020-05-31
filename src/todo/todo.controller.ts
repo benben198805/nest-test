@@ -2,6 +2,7 @@ import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs
 import {ToDoItem} from "./dto/doto-item.dto";
 import {TodoService} from "./todo.service";
 import {ShareService} from "../share/share.service";
+import {CreateToDoItem} from "./dto/create-item.dto";
 
 @Controller('todo')
 export class TodoController {
@@ -23,10 +24,9 @@ export class TodoController {
 
     @Post()
     @HttpCode(201)
-    create(@Body() createToDoItem: ToDoItem) {
+    create(@Body() createToDoItem: CreateToDoItem) {
         console.log(createToDoItem);
-        this.toDoService.create(createToDoItem);
-        return "created";
+        return this.toDoService.create(createToDoItem);
     }
 
     @Put(':id')
