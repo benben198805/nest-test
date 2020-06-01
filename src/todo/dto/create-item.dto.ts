@@ -1,6 +1,6 @@
-import {IsNotEmpty, IsString} from "class-validator";
+import {IsNotEmpty, IsNumber, IsString} from "class-validator";
 
-export class CreateToDoItem {
+export class CreateToDoItemDto {
 
     @IsString({message: "标题必须字符串"})
     @IsNotEmpty({message: "标题不能不能为空"})
@@ -8,7 +8,7 @@ export class CreateToDoItem {
 
     readonly checked: boolean;
 
-    @IsString()
+    @IsNumber()
     @IsNotEmpty()
-    readonly listId: string;
+    readonly listId: number;
 }

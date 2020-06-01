@@ -1,24 +1,23 @@
 import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
-import {ToDoItem} from "./dto/doto-item.dto";
-import {TodoService} from "./todo.service";
-import {ShareService} from "../share/share.service";
-import {CreateToDoItem} from "./dto/create-item.dto";
-import {Roles} from "../share/decorator/roles.decorator";
+import {ShareService} from "../../share/share.service";
+import {CreateToDoItemDto} from "../dto/create-item.dto";
+import {Roles} from "../../share/decorator/roles.decorator";
+import {TodoItem} from "../entity/todo-item.entity";
+import {ItemService} from "../service/item.service";
 
-@Controller('todo')
-export class TodoController {
+@Controller('todo/item')
+export class ItemController {
 
-    constructor(private toDoService: TodoService, private shareService: ShareService) {
+    constructor(private toDoService: ItemService, private shareService: ShareService) {
     }
 
     @Get()
-    findAll(): ToDoItem[] {
+    findAll(): Promise<TodoItem[]> {
         return this.toDoService.findAll();
     }
 
-
     @Get(':id')
-    find(@Param() params): ToDoItem {
+    find(@Param() params): Promise<TodoItem> {
         this.shareService.log(params.id);
         return this.toDoService.find(params.id);
     }
@@ -26,13 +25,13 @@ export class TodoController {
     @Post()
     @HttpCode(201)
     @Roles('admin')
-    create(@Body() createToDoItem: CreateToDoItem) {
+    create(@Body() createToDoItem: CreateToDoItemDto) {
         console.log(createToDoItem);
         return this.toDoService.create(createToDoItem);
     }
 
     @Put(':id')
-    update(@Param('id') id: string, @Body() updateToDoItem: ToDoItem) {
+    update(@Param('id') id: string, @Body() updateToDoItem: TodoItem) {
         console.log(id);
         console.log(updateToDoItem);
         this.toDoService.update(id, updateToDoItem);

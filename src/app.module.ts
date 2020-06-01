@@ -4,11 +4,20 @@ import {AppService} from './app.service';
 import {TodoModule} from './todo/todo.module';
 import {ShareModule} from './share/share.module';
 import {LoggerMiddleware} from "./logger.middleware";
-import {TodoController} from "./todo/todo.controller";
 import {APP_PIPE} from "@nestjs/core";
+import {TypeOrmModule} from '@nestjs/typeorm';
 
 @Module({
-    imports: [TodoModule, ShareModule],
+    imports: [TypeOrmModule.forRoot({
+        type: 'mysql',
+        host: '127.0.0.1',
+        port: 3306,
+        username: 'root',
+        password: '123456',
+        database: 'nest-test',
+        autoLoadEntities: true,
+        synchronize: true,
+    }), TodoModule, ShareModule],
     controllers: [AppController],
     providers: [AppService, {
         provide: APP_PIPE,
@@ -18,6 +27,6 @@ import {APP_PIPE} from "@nestjs/core";
 export class AppModule implements NestModule {
     configure(consumer: MiddlewareConsumer): any {
         consumer.apply(LoggerMiddleware)
-            .forRoutes(TodoController);
+            .forRoutes(TodoModule);
     }
 }
