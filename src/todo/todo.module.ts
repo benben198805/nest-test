@@ -6,11 +6,12 @@ import {ItemController} from "./controller/item.controller";
 import {ItemService} from "./service/item.service";
 import {ListService} from "./service/list.service";
 import {ListController} from "./controller/list.controller";
+import {ListSubscriber} from "./subscriber/list.subscriber";
 
 @Module({
     imports: [TypeOrmModule.forFeature([TodoList, TodoItem])],
     controllers: [ItemController, ListController],
-    providers: [ItemService, ListService]
+    providers: [ItemService, ListService, ListSubscriber]
 })
 export class TodoModule {
 }
