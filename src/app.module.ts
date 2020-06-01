@@ -6,18 +6,18 @@ import {ShareModule} from './share/share.module';
 import {LoggerMiddleware} from "./logger.middleware";
 import {APP_PIPE} from "@nestjs/core";
 import {TypeOrmModule} from '@nestjs/typeorm';
+import {ConfigModule, ConfigService} from '@nestjs/config';
+import configuration from "./config/configuration";
 
 @Module({
-    imports: [TypeOrmModule.forRoot({
-        type: 'mysql',
-        host: '127.0.0.1',
-        port: 3306,
-        username: 'root',
-        password: '123456',
-        database: 'nest-test',
-        autoLoadEntities: true,
-        synchronize: true,
-    }), TodoModule, ShareModule],
+    imports: [
+        TypeOrmModule.forRootAsync({
+            imports: [ConfigModule.forRoot({
+                load: [configuration]
+            })],
+            useFactory: (configService: ConfigService) => configService.get('database'),
+            inject: [ConfigService]
+        }), TodoModule, ShareModule],
     controllers: [AppController],
     providers: [AppService, {
         provide: APP_PIPE,
