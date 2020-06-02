@@ -33,7 +33,15 @@ async function bootstrap() {
         }
     }));
     app.use(cookieParser());
-    app.use(csurf());
+    // app.use(function (req, res, next) {
+    //     var token = req.csrfToken();
+    //     res.cookie('XSRF-TOKEN', token);
+    //     res.locals.csrfToken = token;
+    //     next();
+    // });
+
+    // app.use(csurf());
+
 
     app.use(compression());
 

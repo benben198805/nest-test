@@ -16,5 +16,12 @@ export default () => ({
         host: 'localhost',
         auth_pass: '123456',
         port: 6379
+    },
+    bull: {
+        redis: {
+            host: 'localhost',
+            password: '123456',
+            port: 6379
+        }
     }
 });

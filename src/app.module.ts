@@ -10,6 +10,8 @@ import {ConfigModule, ConfigService} from '@nestjs/config';
 import configuration from "./config/configuration";
 import {ScheduleModule} from '@nestjs/schedule';
 import {TasksModule} from "./schedule/tasks.module";
+import {AudioModule} from "./audio/audio.module";
+import {BullModule} from "@nestjs/bull";
 
 @Module({
     imports: [
@@ -27,8 +29,8 @@ import {TasksModule} from "./schedule/tasks.module";
             useFactory: (configService: ConfigService) => configService.get('database'),
             inject: [ConfigService]
         }),
-        TodoModule, ShareModule,
-        ScheduleModule.forRoot(), TasksModule],
+        ScheduleModule.forRoot(),
+        TodoModule, ShareModule, TasksModule, AudioModule],
     controllers: [AppController],
     providers: [AppService, {
         provide: APP_PIPE,
