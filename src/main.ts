@@ -3,6 +3,8 @@ import {AppModule} from './app.module';
 import * as compression from 'compression';
 import * as helmet from 'helmet';
 import * as csurf from 'csurf';
+import { join } from 'path';
+import {NestExpressApplication} from "@nestjs/platform-express";
 
 var session = require('cookie-session');
 var cookieParser = require('cookie-parser');
@@ -10,7 +12,7 @@ var cookieParser = require('cookie-parser');
 declare const module: any;
 
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
     app.use(helmet());
 
@@ -42,6 +44,9 @@ async function bootstrap() {
 
     // app.use(csurf());
 
+    app.useStaticAssets(join(__dirname, '..', 'public'));
+    app.setBaseViewsDir(join(__dirname, '..', 'views'));
+    app.setViewEngine('hbs');
 
     app.use(compression());
 

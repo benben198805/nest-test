@@ -1,6 +1,5 @@
 import {CacheModule, MiddlewareConsumer, Module, NestModule, ValidationPipe} from '@nestjs/common';
 import {AppController} from './app.controller';
-import {AppService} from './app.service';
 import {TodoModule} from './todo/todo.module';
 import {ShareModule} from './share/share.module';
 import {LoggerMiddleware} from "./logger.middleware";
@@ -11,7 +10,6 @@ import configuration from "./config/configuration";
 import {ScheduleModule} from '@nestjs/schedule';
 import {TasksModule} from "./schedule/tasks.module";
 import {AudioModule} from "./audio/audio.module";
-import {BullModule} from "@nestjs/bull";
 
 @Module({
     imports: [
@@ -32,7 +30,7 @@ import {BullModule} from "@nestjs/bull";
         ScheduleModule.forRoot(),
         TodoModule, ShareModule, TasksModule, AudioModule],
     controllers: [AppController],
-    providers: [AppService, {
+    providers: [{
         provide: APP_PIPE,
         useClass: ValidationPipe
     }],
