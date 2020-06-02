@@ -8,6 +8,8 @@ import {APP_PIPE} from "@nestjs/core";
 import {TypeOrmModule} from '@nestjs/typeorm';
 import {ConfigModule, ConfigService} from '@nestjs/config';
 import configuration from "./config/configuration";
+import {ScheduleModule} from '@nestjs/schedule';
+import {TasksModule} from "./schedule/tasks.module";
 
 @Module({
     imports: [
@@ -24,7 +26,9 @@ import configuration from "./config/configuration";
             })],
             useFactory: (configService: ConfigService) => configService.get('database'),
             inject: [ConfigService]
-        }), TodoModule, ShareModule],
+        }),
+        TodoModule, ShareModule,
+        ScheduleModule.forRoot(), TasksModule],
     controllers: [AppController],
     providers: [AppService, {
         provide: APP_PIPE,
