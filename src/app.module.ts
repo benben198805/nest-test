@@ -10,6 +10,8 @@ import configuration from "./config/configuration";
 import {ScheduleModule} from '@nestjs/schedule';
 import {TasksModule} from "./schedule/tasks.module";
 import {AudioModule} from "./audio/audio.module";
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
     imports: [
@@ -28,7 +30,7 @@ import {AudioModule} from "./audio/audio.module";
             inject: [ConfigService]
         }),
         ScheduleModule.forRoot(),
-        TodoModule, ShareModule, TasksModule, AudioModule],
+        TodoModule, ShareModule, TasksModule, AudioModule, AuthModule, UsersModule],
     controllers: [AppController],
     providers: [{
         provide: APP_PIPE,
