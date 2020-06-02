@@ -4,6 +4,9 @@ import * as compression from 'compression';
 import * as helmet from 'helmet';
 import * as csurf from 'csurf';
 
+var session = require('cookie-session');
+var cookieParser = require('cookie-parser');
+
 declare const module: any;
 
 async function bootstrap() {
@@ -18,6 +21,18 @@ async function bootstrap() {
 
     app.enableCors();
 
+    app.use(session({
+        name: 'session',
+        keys: ['key1', 'key2'],
+        cookie: {
+            secure: true,
+            httpOnly: true,
+            domain: '127.0.0.1',
+            path: '*',
+            expires: new Date(Date.now() + 60 * 60 * 1000)
+        }
+    }));
+    app.use(cookieParser());
     app.use(csurf());
 
     app.use(compression());
