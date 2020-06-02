@@ -1,4 +1,15 @@
-import {Body, Controller, Delete, Get, HttpCode, Param, Post, Put} from '@nestjs/common';
+import {
+    Body,
+    CacheInterceptor,
+    Controller,
+    Delete,
+    Get,
+    HttpCode,
+    Param,
+    Post,
+    Put,
+    UseInterceptors
+} from '@nestjs/common';
 import {ShareService} from "../../share/share.service";
 import {Roles} from "../../share/decorator/roles.decorator";
 import {ListService} from "../service/list.service";
@@ -6,6 +17,7 @@ import {TodoList} from "../entity/todo-list.entity";
 import {CreateToDoListDto} from "../dto/create-list.dto";
 
 @Controller('todo')
+@UseInterceptors(CacheInterceptor)
 export class ListController {
 
     constructor(private listService: ListService, private shareService: ShareService) {
@@ -13,6 +25,7 @@ export class ListController {
 
     @Get()
     findAll(): Promise<TodoList[]> {
+        console.log("find all");
         return this.listService.findAll();
     }
 

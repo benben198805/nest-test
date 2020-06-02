@@ -1,4 +1,4 @@
-import {MiddlewareConsumer, Module, NestModule, ValidationPipe} from '@nestjs/common';
+import {CacheModule, MiddlewareConsumer, Module, NestModule, ValidationPipe} from '@nestjs/common';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {TodoModule} from './todo/todo.module';
@@ -11,6 +11,13 @@ import configuration from "./config/configuration";
 
 @Module({
     imports: [
+        CacheModule.registerAsync({
+            imports: [ConfigModule.forRoot({
+                load: [configuration]
+            })],
+            useFactory: (configService: ConfigService) => configService.get('redis'),
+            inject: [ConfigService]
+        }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule.forRoot({
                 load: [configuration]

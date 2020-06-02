@@ -1,3 +1,5 @@
+import * as redisStore from 'cache-manager-redis-store';
+
 export default () => ({
     database: {
         type: 'mysql',
@@ -8,5 +10,11 @@ export default () => ({
         database: "nest-test",
         autoLoadEntities: true,
         synchronize: true,
+    },
+    cache: {
+        store: redisStore,
+        host: 'localhost',
+        auth_pass: '123456',
+        port: 6379
     }
 });
